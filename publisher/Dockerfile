@@ -1,11 +1,10 @@
 FROM golang:1.14-alpine as build
-RUN apk add --no-cache git
+# RUN apk add --no-cache git
 WORKDIR /src
-RUN export GO111MODULE=on
-RUN go get github.com/julienschmidt/httprouter
-RUN go get github.com/sirupsen/logrus
-RUN go get github.com/streadway/amqp
-COPY publisher.go /src
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+COPY publisher.go ./
 RUN go build publisher.go
 
 FROM alpine as runtime
