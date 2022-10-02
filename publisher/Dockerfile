@@ -9,4 +9,5 @@ RUN go build publisher.go
 
 FROM alpine as runtime
 COPY --from=build /src/publisher /app/publisher
+EXPOSE 80
 CMD [ "/app/publisher" ]
